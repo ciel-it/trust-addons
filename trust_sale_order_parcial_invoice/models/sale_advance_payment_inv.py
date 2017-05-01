@@ -22,8 +22,14 @@ class SaleAdvancePaymentInv(models.TransientModel):
         lista = []
 
         for item in sale_order_line:
-            if item.state != 'done' and item.state != 'cancel'\
-                    and item.product_uom_qty > 0:
+            counter = 0
+            for invline in item.invoice_lines:
+                counter += 1
+
+            if item.state == 'done' and counter == 0:
+                item.write({'state': 'confirmed'})
+
+            if item.state != 'done' and item.state != 'cancel' and item.product_uom_qty > 0:
                 lista.append((0, 0, {'sale_order_line_id': item.id,
                                      'name': item.name,
                                      'quantidade': item.product_uom_qty,
