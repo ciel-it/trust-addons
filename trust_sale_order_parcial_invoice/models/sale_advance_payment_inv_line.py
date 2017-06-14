@@ -23,6 +23,7 @@ class SaleAdvancePaymentInvLine(models.TransientModel):
         vals = {
             "name": produto.name,
             "quantidade": produto.product_uom_qty,
+            "a_faturar": produto.product_uom_qtym,
             "subtotal": produto.price_subtotal,
         }
 
